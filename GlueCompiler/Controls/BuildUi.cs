@@ -14,11 +14,19 @@ namespace GlueCompiler.Controls
 {
     public partial class BuildUi : UserControl
     {
+        public const int TYPE_COLUMN = 0;
+        public const int MESSAGE_COLUMN = 1;
+        public const int LINE_NUM_COLUMN = 2;
+        public const int FILE_COLUMN = 3;
+        public const int PROJECT_COLUMN = 4;
+
         private BuildProcessor _builder;
+        private BuildMessageListViewSorter _sorter;
 
         public BuildUi()
         {
             _builder = new BuildProcessor();
+            _sorter = new BuildMessageListViewSorter();
             InitializeComponent();
         }
 
@@ -26,6 +34,7 @@ namespace GlueCompiler.Controls
         {
             this.Dock = DockStyle.Fill;
             cmbBuildType.SelectedIndex = 0;
+            lstMessages.ListViewItemSorter = _sorter;
         }
 
         private void btnCompile_Click(object sender, EventArgs e)
@@ -42,17 +51,7 @@ namespace GlueCompiler.Controls
 
             _builder = new BuildProcessor();
             var messages = _builder.Run(solution, cmbBuildType.SelectedItem as string);
-            foreach (var message in messages)
-            {
-                lstMessages.Items.Add(new ListViewItem(new string[]
-                {
-                    message.Type.ToString(),
-                    message.Message,
-                    message.LineNumber.ToString(),
-                    message.File,
-                    message.Project
-                }));
-            }
+            DisplayMessages(messages);
 
             // If no messages then the build was successful
             if (messages.Count() == 0)
@@ -61,6 +60,49 @@ namespace GlueCompiler.Controls
                 {
                     "Success",
                     "Project was successfully compiled"
+                }));
+            }
+        }
+
+        private void lstMessages_ColumnClick(object sender, ColumnClickEventArgs e)
+        {
+            // Determine if clicked column is already the column that is being sorted.
+            if (e.Column == _sorter.SortColumn)
+            {
+                // Reverse the current sort direction for this column.
+                if (_sorter.Order == SortOrder.Ascending)
+                    _sorter.Order = SortOrder.Descending;
+                else
+                    _sorter.Order = SortOrder.Ascending;
+            }
+            else
+            {
+                // Set the column number that is to be sorted; default to ascending.
+                _sorter.SortColumn = e.Column;
+                _sorter.Order = SortOrder.Ascending;
+            }
+
+            // Perform the sort with these new sort options.
+            lstMessages.Sort();
+        }
+
+        private void DisplayMessages(IEnumerable<BuildMessage> messages)
+        {
+            lstMessages.Items.Clear();
+
+            foreach (var message in messages)
+            {
+                var project = message.Project;
+                if (!string.IsNullOrWhiteSpace(project) && project.LastIndexOf("\\") >= 0)
+                    project = project.Substring(project.LastIndexOf("\\") + 1);
+
+                lstMessages.Items.Add(new ListViewItem(new string[]
+                {
+                    message.Type.ToString(),
+                    message.Message,
+                    message.LineNumber.ToString(),
+                    message.File,
+                    project
                 }));
             }
         }

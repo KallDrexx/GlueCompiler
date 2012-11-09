@@ -63,7 +63,7 @@ namespace GlueCompiler
 
             _mainUi = new BuildUi();
             _tab = new PluginTab();
-            _tab.Text = FriendlyName;
+            _tab.Text = "  " + FriendlyName + "  ";
             _tab.Controls.Add(_mainUi);
             _container.Controls.Add(_tab);
         }

@@ -74,6 +74,7 @@
     <Compile Include="Builders\BuildMessage.cs" />
     <Compile Include="Builders\BuildMessageType.cs" />
     <Compile Include="Builders\BuildProcessor.cs" />
+    <Compile Include="Controls\BuildMessageListViewSorter.cs" />
     <Compile Include="Controls\BuildUi.cs">
       <SubType>UserControl</SubType>
     </Compile>

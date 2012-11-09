@@ -71,12 +71,14 @@
             this.clmLineNumber,
             this.clmFile,
             this.clmProject});
+            this.lstMessages.FullRowSelect = true;
             this.lstMessages.Location = new System.Drawing.Point(3, 61);
             this.lstMessages.Name = "lstMessages";
             this.lstMessages.Size = new System.Drawing.Size(511, 343);
             this.lstMessages.TabIndex = 4;
             this.lstMessages.UseCompatibleStateImageBehavior = false;
             this.lstMessages.View = System.Windows.Forms.View.Details;
+            this.lstMessages.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lstMessages_ColumnClick);
             // 
             // clmType
             // 
@@ -88,7 +90,6 @@
             // 
             // clmLineNumber
             // 
-            this.clmLineNumber.DisplayIndex = 2;
             this.clmLineNumber.Text = "Line Number";
             // 
             // clmFile
@@ -97,7 +98,6 @@
             // 
             // clmProject
             // 
-            this.clmProject.DisplayIndex = 4;
             this.clmProject.Text = "Project";
             // 
             // BuildUi
