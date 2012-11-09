@@ -86,6 +86,27 @@ namespace GlueCompiler.Controls
             lstMessages.Sort();
         }
 
+        private void lstMessages_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.C)
+            {
+                if (lstMessages.SelectedItems.Count == 0)
+                    return;
+
+                string text = string.Empty;
+                var item = lstMessages.SelectedItems[0];
+                for (int x = 0; x < item.SubItems.Count; x++)
+                {
+                    if (x > 0)
+                        text += "\t";
+
+                    text += item.SubItems[x].Text;
+                }
+
+                Clipboard.SetText(text);
+            }
+        }
+
         private void DisplayMessages(IEnumerable<BuildMessage> messages)
         {
             lstMessages.Items.Clear();
