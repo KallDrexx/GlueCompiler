@@ -21,7 +21,9 @@ namespace GlueCompiler.Controls
         public const int PROJECT_COLUMN = 4;
 
         private BuildProcessor _builder;
+        private IEnumerable<BuildMessage> _lastBuildMessages;
         private BuildMessageListViewSorter _sorter;
+        private bool _dataLoading;
 
         public BuildUi()
         {
@@ -35,11 +37,14 @@ namespace GlueCompiler.Controls
             this.Dock = DockStyle.Fill;
             cmbBuildType.SelectedIndex = 0;
             lstMessages.ListViewItemSorter = _sorter;
+            DisableToggles();
         }
 
         private void btnCompile_Click(object sender, EventArgs e)
         {
+            DisableToggles();
             lstMessages.Items.Clear();
+            _lastBuildMessages = null;
 
             string directory = ProjectManager.ProjectRootDirectory;
             string solution = Directory.GetFiles(directory).FirstOrDefault(x => x.EndsWith(".sln"));
@@ -50,18 +55,20 @@ namespace GlueCompiler.Controls
             }
 
             _builder = new BuildProcessor();
-            var messages = _builder.Run(solution, cmbBuildType.SelectedItem as string);
-            DisplayMessages(messages);
+            _lastBuildMessages = _builder.Run(solution, cmbBuildType.SelectedItem as string);
 
             // If no messages then the build was successful
-            if (messages.Count() == 0)
+            if (_lastBuildMessages.Count() == 0)
             {
-                lstMessages.Items.Add(new ListViewItem(new string[]
+                _lastBuildMessages = new BuildMessage[]
                 {
-                    "Success",
-                    "Project was successfully compiled"
-                }));
+                    new BuildMessage { Type = BuildMessageType.Success, Message = "Your project built successfully" }
+                };
             }
+
+            EnableToggles();
+            SetToggleText();
+            DisplayMessages(_lastBuildMessages);
         }
 
         private void lstMessages_ColumnClick(object sender, ColumnClickEventArgs e)
@@ -107,9 +114,27 @@ namespace GlueCompiler.Controls
             }
         }
 
+        private void ToggleButtonsCheckedChange(object sender, EventArgs e)
+        {
+            if (_dataLoading)
+                return;
+
+            DisplayMessages(_lastBuildMessages);
+        }
+
         private void DisplayMessages(IEnumerable<BuildMessage> messages)
         {
             lstMessages.Items.Clear();
+
+            // Filter based on the checked items
+            var queryable = _lastBuildMessages.AsQueryable();
+            if (!chkShowErrors.Checked)
+                queryable = queryable.Where(x => x.Type != BuildMessageType.Error);
+
+            if (!chkShowWarnings.Checked)
+                queryable = queryable.Where(x => x.Type != BuildMessageType.Warning);
+
+            messages = queryable.ToArray();
 
             foreach (var message in messages)
             {
@@ -126,6 +151,33 @@ namespace GlueCompiler.Controls
                     project
                 }));
             }
+        }
+
+        private void DisableToggles()
+        {
+            chkShowErrors.Visible = false;
+            chkShowWarnings.Visible = false;
+        }
+
+        private void EnableToggles()
+        {
+            _dataLoading = true;
+
+            chkShowErrors.Visible = true;
+            chkShowErrors.Checked = true;
+            chkShowWarnings.Visible = true;
+            chkShowWarnings.Checked = true;
+
+            _dataLoading = false;
+        }
+
+        private void SetToggleText()
+        {
+            int errorCount = _lastBuildMessages.Count(x => x.Type == BuildMessageType.Error);
+            int warningCount = _lastBuildMessages.Count(x => x.Type == BuildMessageType.Warning);
+
+            chkShowErrors.Text = errorCount + " Errors";
+            chkShowWarnings.Text = warningCount + " Warnings";
         }
     }
 }
