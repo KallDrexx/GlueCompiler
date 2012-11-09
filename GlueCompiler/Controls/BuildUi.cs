@@ -95,6 +95,7 @@ namespace GlueCompiler.Controls
 
         private void lstMessages_KeyDown(object sender, KeyEventArgs e)
         {
+            // Copy support
             if (e.Control && e.KeyCode == Keys.C)
             {
                 if (lstMessages.SelectedItems.Count == 0)
@@ -116,6 +117,13 @@ namespace GlueCompiler.Controls
                 }
 
                 Clipboard.SetText(text.ToString());
+            }
+            
+            // Select all support
+            else if (e.Control && e.KeyCode == Keys.A)
+            {
+                foreach (ListViewItem item in lstMessages.Items)
+                    item.Selected = true;
             }
         }
 
