@@ -100,17 +100,22 @@ namespace GlueCompiler.Controls
                 if (lstMessages.SelectedItems.Count == 0)
                     return;
 
-                string text = string.Empty;
-                var item = lstMessages.SelectedItems[0];
-                for (int x = 0; x < item.SubItems.Count; x++)
+                var text = new StringBuilder();
+                foreach (ListViewItem item in lstMessages.SelectedItems)
                 {
-                    if (x > 0)
-                        text += "\t";
+                    for (int x = 0; x < item.SubItems.Count; x++)
+                    {
+                        if (x > 0)
+                            text.Append("\t");
 
-                    text += item.SubItems[x].Text;
+                        text.Append(item.SubItems[x].Text);
+                    }
+
+                    if (lstMessages.SelectedItems[lstMessages.SelectedItems.Count - 1] != item)
+                        text.Append(Environment.NewLine);
                 }
 
-                Clipboard.SetText(text);
+                Clipboard.SetText(text.ToString());
             }
         }
 
