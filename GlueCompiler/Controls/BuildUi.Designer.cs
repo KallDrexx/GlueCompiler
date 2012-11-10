@@ -65,9 +65,6 @@
             // 
             // lstMessages
             // 
-            this.lstMessages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.lstMessages.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clmType,
             this.clmMessage,
@@ -75,6 +72,7 @@
             this.clmFile,
             this.clmProject});
             this.lstMessages.FullRowSelect = true;
+            this.lstMessages.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.lstMessages.Location = new System.Drawing.Point(3, 99);
             this.lstMessages.Name = "lstMessages";
             this.lstMessages.Size = new System.Drawing.Size(511, 305);
