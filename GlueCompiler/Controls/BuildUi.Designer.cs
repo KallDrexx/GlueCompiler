@@ -81,7 +81,6 @@
             this.lstMessages.TabIndex = 4;
             this.lstMessages.UseCompatibleStateImageBehavior = false;
             this.lstMessages.View = System.Windows.Forms.View.Details;
-            this.lstMessages.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.lstMessages_ColumnClick);
             this.lstMessages.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstMessages_KeyDown);
             // 
             // clmType

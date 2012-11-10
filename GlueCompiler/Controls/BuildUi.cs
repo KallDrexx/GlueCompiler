@@ -60,28 +60,6 @@ namespace GlueCompiler.Controls
             _builder.StartCompile(solution, cmbBuildType.SelectedItem as string);
         }
 
-        private void lstMessages_ColumnClick(object sender, ColumnClickEventArgs e)
-        {
-            // Determine if clicked column is already the column that is being sorted.
-            if (e.Column == _sorter.SortColumn)
-            {
-                // Reverse the current sort direction for this column.
-                if (_sorter.Order == SortOrder.Ascending)
-                    _sorter.Order = SortOrder.Descending;
-                else
-                    _sorter.Order = SortOrder.Ascending;
-            }
-            else
-            {
-                // Set the column number that is to be sorted; default to ascending.
-                _sorter.SortColumn = e.Column;
-                _sorter.Order = SortOrder.Ascending;
-            }
-
-            // Perform the sort with these new sort options.
-            lstMessages.Sort();
-        }
-
         private void lstMessages_KeyDown(object sender, KeyEventArgs e)
         {
             // Copy support
