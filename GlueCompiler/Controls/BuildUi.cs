@@ -9,6 +9,9 @@ using System.Windows.Forms;
 using GlueCompiler.Builders;
 using FlatRedBall.Glue;
 using System.IO;
+using FlatRedBall.Glue.VSHelpers.Projects;
+using Microsoft.Build.BuildEngine;
+using System.Diagnostics;
 
 namespace GlueCompiler.Controls
 {
@@ -24,6 +27,7 @@ namespace GlueCompiler.Controls
         private IEnumerable<BuildMessage> _lastBuildMessages;
         private BuildMessageListViewSorter _sorter;
         private bool _dataLoading;
+        private bool _runAfterCompile;
 
         public BuildUi()
         {
@@ -43,21 +47,14 @@ namespace GlueCompiler.Controls
 
         private void btnCompile_Click(object sender, EventArgs e)
         {
-            string directory = ProjectManager.ProjectRootDirectory;
-            string solution = Directory.GetFiles(directory).FirstOrDefault(x => x.EndsWith(".sln"));
-            if (solution == null)
-            {
-                MessageBox.Show("No solution found in " + directory, "Error", MessageBoxButtons.OK);
-                return;
-            }
+            _runAfterCompile = false;
+            StartCompile();
+        }
 
-            DisableToggles();
-            lstMessages.Items.Clear();
-            _lastBuildMessages = null;
-            lblCompileMessage.Visible = true;
-            btnCompile.Enabled = false;
-
-            _builder.StartCompile(solution, cmbBuildType.SelectedItem as string);
+        private void btnRun_Click(object sender, EventArgs e)
+        {
+            _runAfterCompile = true;
+            StartCompile();
         }
 
         private void lstMessages_KeyDown(object sender, KeyEventArgs e)
@@ -160,6 +157,62 @@ namespace GlueCompiler.Controls
             chkShowWarnings.Text = warningCount + " Warnings";
         }
 
+        private void StartCompile()
+        {
+            string directory = ProjectManager.ProjectRootDirectory;
+            string solution = Directory.GetFiles(directory).FirstOrDefault(x => x.EndsWith(".sln"));
+            if (solution == null)
+            {
+                MessageBox.Show("No solution found in " + directory, "Error", MessageBoxButtons.OK);
+                return;
+            }
+
+            DisableToggles();
+            lstMessages.Items.Clear();
+            _lastBuildMessages = null;
+            lblCompileMessage.Visible = true;
+            btnCompile.Enabled = false;
+
+            _builder.StartCompile(solution, cmbBuildType.SelectedItem as string);
+        }
+
+        private void RunGame()
+        {
+            if (!(ProjectManager.ProjectBase is VisualStudioProject))
+            {
+                string message = "Run is only available for VS based projects";
+                MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                return;
+            }
+
+            var project = ProjectManager.ProjectBase as VisualStudioProject;
+
+            // Try to figure out the path to the built executable
+            string path = project.Directory;
+            var props = new List<BuildProperty>();
+            foreach (BuildProperty prop in project.Project.EvaluatedProperties)
+            {
+                if (prop.Name.Equals("OutputPath", StringComparison.OrdinalIgnoreCase))
+                {
+                    path = string.Concat(path, prop.Value, "\\", project.Name, ".exe");
+                    break;
+                }
+            }
+
+            // Glue always loads the project in debug mode, 
+            //   so we must replace the debug part of the output path with the build type
+            path = path.Replace("Debug", cmbBuildType.SelectedItem as string);
+
+            if (!File.Exists(path))
+            {
+                string message = "Could not find the executable: " + path;
+                MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            Process.Start(path);
+        }
+
         private void CompileCompletedHandler(IEnumerable<BuildMessage> results)
         {
             // If this is not called on the UI thread, re-call it on the correct thread
@@ -180,6 +233,10 @@ namespace GlueCompiler.Controls
                     {
                         new BuildMessage { Type = BuildMessageType.Success, Message = "Your project built successfully" }
                     };
+
+                    // Since this was successful, if the user selected to run the game
+                    if (_runAfterCompile)
+                        RunGame();
                 }
             }
             catch (Exception ex)

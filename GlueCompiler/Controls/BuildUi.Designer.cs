@@ -39,6 +39,7 @@
             this.chkShowErrors = new System.Windows.Forms.CheckBox();
             this.chkShowWarnings = new System.Windows.Forms.CheckBox();
             this.lblCompileMessage = new System.Windows.Forms.Label();
+            this.btnRun = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // cmbBuildType
@@ -65,6 +66,9 @@
             // 
             // lstMessages
             // 
+            this.lstMessages.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lstMessages.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clmType,
             this.clmMessage,
@@ -88,10 +92,12 @@
             // clmMessage
             // 
             this.clmMessage.Text = "Message";
+            this.clmMessage.Width = 206;
             // 
             // clmLineNumber
             // 
             this.clmLineNumber.Text = "Line Number";
+            this.clmLineNumber.Width = 106;
             // 
             // clmFile
             // 
@@ -134,10 +140,21 @@
             this.lblCompileMessage.TabIndex = 7;
             this.lblCompileMessage.Text = "Compiling, please wait....";
             // 
+            // btnRun
+            // 
+            this.btnRun.Location = new System.Drawing.Point(211, 15);
+            this.btnRun.Name = "btnRun";
+            this.btnRun.Size = new System.Drawing.Size(75, 23);
+            this.btnRun.TabIndex = 8;
+            this.btnRun.Text = "Run";
+            this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
+            // 
             // BuildUi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.btnRun);
             this.Controls.Add(this.lblCompileMessage);
             this.Controls.Add(this.chkShowWarnings);
             this.Controls.Add(this.chkShowErrors);
@@ -165,5 +182,6 @@
         private System.Windows.Forms.CheckBox chkShowErrors;
         private System.Windows.Forms.CheckBox chkShowWarnings;
         private System.Windows.Forms.Label lblCompileMessage;
+        private System.Windows.Forms.Button btnRun;
     }
 }
