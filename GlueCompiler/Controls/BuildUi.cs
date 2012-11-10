@@ -227,12 +227,13 @@ namespace GlueCompiler.Controls
                 _lastBuildMessages = results;
 
                 // If no messages then the build was successful
-                if (_lastBuildMessages.Count() == 0)
+                bool success = _lastBuildMessages.All(x => x.Type != BuildMessageType.Error && x.Type == BuildMessageType.Exception);
+                if (success)
                 {
-                    _lastBuildMessages = new BuildMessage[]
+                    _lastBuildMessages = _lastBuildMessages.Union(new BuildMessage[]
                     {
                         new BuildMessage { Type = BuildMessageType.Success, Message = "Your project built successfully" }
-                    };
+                    });
 
                     // Since this was successful, if the user selected to run the game
                     if (_runAfterCompile)
