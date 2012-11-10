@@ -5,27 +5,41 @@ using System.Text;
 using Microsoft.Build.Evaluation;
 using Microsoft.Build.Execution;
 using Microsoft.Build.Framework;
+using System.Threading.Tasks;
 
 namespace GlueCompiler.Builders
 {
     public class BuildProcessor
     {
         private BuildLogger _logger;
+        private CompileCompletedDelegate _compileCompletedHandler;
 
-        public IEnumerable<BuildMessage> Run(string solutionPath, string buildType)
+        public BuildProcessor(CompileCompletedDelegate compileCompletedHandler)
         {
-            // Build the solution
-            var properties = new Dictionary<string, string>();
-            properties["Configuration"] = buildType;
+            _compileCompletedHandler = compileCompletedHandler;
+        }
 
-            _logger = new BuildLogger();
-            var parameters = new BuildParameters();
-            parameters.Loggers = new ILogger[] { _logger };
+        public void StartCompile(string solutionPath, string buildType)
+        {
+            // Create the task to run the compile in the background
+            var task = new Task(() =>
+            {
+                // Build the solution
+                var properties = new Dictionary<string, string>();
+                properties["Configuration"] = buildType;
 
-            var request = new BuildRequestData(solutionPath, properties, null, new string[] { "Build" }, null);
-            var result = BuildManager.DefaultBuildManager.Build(parameters, request);
+                _logger = new BuildLogger();
+                var parameters = new BuildParameters();
+                parameters.Loggers = new ILogger[] { _logger };
 
-            return _logger.BuildMessages;
+                var request = new BuildRequestData(solutionPath, properties, null, new string[] { "Build" }, null);
+                var result = BuildManager.DefaultBuildManager.Build(parameters, request);
+
+                if (_compileCompletedHandler != null)
+                    _compileCompletedHandler(_logger.BuildMessages);
+            });
+
+            task.Start();
         }
     }
 }

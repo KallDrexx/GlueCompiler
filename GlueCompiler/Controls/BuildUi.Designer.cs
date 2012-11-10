@@ -38,6 +38,7 @@
             this.clmProject = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.chkShowErrors = new System.Windows.Forms.CheckBox();
             this.chkShowWarnings = new System.Windows.Forms.CheckBox();
+            this.lblCompileMessage = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // cmbBuildType
@@ -74,9 +75,9 @@
             this.clmFile,
             this.clmProject});
             this.lstMessages.FullRowSelect = true;
-            this.lstMessages.Location = new System.Drawing.Point(3, 82);
+            this.lstMessages.Location = new System.Drawing.Point(3, 99);
             this.lstMessages.Name = "lstMessages";
-            this.lstMessages.Size = new System.Drawing.Size(511, 322);
+            this.lstMessages.Size = new System.Drawing.Size(511, 305);
             this.lstMessages.TabIndex = 4;
             this.lstMessages.UseCompatibleStateImageBehavior = false;
             this.lstMessages.View = System.Windows.Forms.View.Details;
@@ -107,7 +108,7 @@
             // 
             this.chkShowErrors.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkShowErrors.AutoSize = true;
-            this.chkShowErrors.Location = new System.Drawing.Point(3, 53);
+            this.chkShowErrors.Location = new System.Drawing.Point(3, 70);
             this.chkShowErrors.Name = "chkShowErrors";
             this.chkShowErrors.Size = new System.Drawing.Size(68, 23);
             this.chkShowErrors.TabIndex = 5;
@@ -119,7 +120,7 @@
             // 
             this.chkShowWarnings.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkShowWarnings.AutoSize = true;
-            this.chkShowWarnings.Location = new System.Drawing.Point(77, 53);
+            this.chkShowWarnings.Location = new System.Drawing.Point(77, 70);
             this.chkShowWarnings.Name = "chkShowWarnings";
             this.chkShowWarnings.Size = new System.Drawing.Size(86, 23);
             this.chkShowWarnings.TabIndex = 6;
@@ -127,10 +128,20 @@
             this.chkShowWarnings.UseVisualStyleBackColor = true;
             this.chkShowWarnings.CheckedChanged += new System.EventHandler(this.ToggleButtonsCheckedChange);
             // 
+            // lblCompileMessage
+            // 
+            this.lblCompileMessage.AutoSize = true;
+            this.lblCompileMessage.Location = new System.Drawing.Point(3, 54);
+            this.lblCompileMessage.Name = "lblCompileMessage";
+            this.lblCompileMessage.Size = new System.Drawing.Size(123, 13);
+            this.lblCompileMessage.TabIndex = 7;
+            this.lblCompileMessage.Text = "Compiling, please wait....";
+            // 
             // BuildUi
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.lblCompileMessage);
             this.Controls.Add(this.chkShowWarnings);
             this.Controls.Add(this.chkShowErrors);
             this.Controls.Add(this.lstMessages);
@@ -156,5 +167,6 @@
         private System.Windows.Forms.ColumnHeader clmLineNumber;
         private System.Windows.Forms.CheckBox chkShowErrors;
         private System.Windows.Forms.CheckBox chkShowWarnings;
+        private System.Windows.Forms.Label lblCompileMessage;
     }
 }
