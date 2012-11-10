@@ -7,4 +7,5 @@ using GlueCompiler.Builders;
 namespace GlueCompiler
 {
     public delegate void CompileCompletedDelegate(IEnumerable<BuildMessage> results);
+    public delegate void CompileExceptionDelegate(Exception ex);
 }

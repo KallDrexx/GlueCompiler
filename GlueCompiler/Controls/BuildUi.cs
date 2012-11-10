@@ -31,7 +31,7 @@ namespace GlueCompiler.Controls
 
         public BuildUi()
         {
-            _builder = new BuildProcessor(CompileCompletedHandler);
+            _builder = new BuildProcessor(CompileCompletedHandler, CompileExceptionHandler);
             _sorter = new BuildMessageListViewSorter();
             InitializeComponent();
         }
@@ -249,6 +249,14 @@ namespace GlueCompiler.Controls
             EnableToggles();
             SetToggleText();
             DisplayMessages(_lastBuildMessages);
+            lblCompileMessage.Visible = false;
+            btnCompile.Enabled = true;
+        }
+
+        private void CompileExceptionHandler(Exception ex)
+        {
+            string message = string.Format("A {0} exceptio occurred during compilation: {1}", ex.GetType(), ex.Message);
+            MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             lblCompileMessage.Visible = false;
             btnCompile.Enabled = true;
         }
