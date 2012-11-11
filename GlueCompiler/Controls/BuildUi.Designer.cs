@@ -109,9 +109,10 @@
             // 
             // chkShowErrors
             // 
+            this.chkShowErrors.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkShowErrors.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkShowErrors.AutoSize = true;
-            this.chkShowErrors.Location = new System.Drawing.Point(292, 3);
+            this.chkShowErrors.Location = new System.Drawing.Point(347, 3);
             this.chkShowErrors.Name = "chkShowErrors";
             this.chkShowErrors.Size = new System.Drawing.Size(68, 23);
             this.chkShowErrors.TabIndex = 5;
@@ -121,9 +122,10 @@
             // 
             // chkShowWarnings
             // 
+            this.chkShowWarnings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.chkShowWarnings.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkShowWarnings.AutoSize = true;
-            this.chkShowWarnings.Location = new System.Drawing.Point(366, 3);
+            this.chkShowWarnings.Location = new System.Drawing.Point(421, 3);
             this.chkShowWarnings.Name = "chkShowWarnings";
             this.chkShowWarnings.Size = new System.Drawing.Size(86, 23);
             this.chkShowWarnings.TabIndex = 6;
