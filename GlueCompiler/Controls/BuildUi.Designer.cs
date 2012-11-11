@@ -49,14 +49,14 @@
             this.cmbBuildType.Items.AddRange(new object[] {
             "Debug",
             "Release"});
-            this.cmbBuildType.Location = new System.Drawing.Point(3, 15);
+            this.cmbBuildType.Location = new System.Drawing.Point(3, 3);
             this.cmbBuildType.Name = "cmbBuildType";
             this.cmbBuildType.Size = new System.Drawing.Size(121, 21);
             this.cmbBuildType.TabIndex = 1;
             // 
             // btnCompile
             // 
-            this.btnCompile.Location = new System.Drawing.Point(130, 15);
+            this.btnCompile.Location = new System.Drawing.Point(130, 3);
             this.btnCompile.Name = "btnCompile";
             this.btnCompile.Size = new System.Drawing.Size(75, 23);
             this.btnCompile.TabIndex = 3;
@@ -77,9 +77,9 @@
             this.clmProject});
             this.lstMessages.FullRowSelect = true;
             this.lstMessages.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lstMessages.Location = new System.Drawing.Point(3, 99);
+            this.lstMessages.Location = new System.Drawing.Point(3, 59);
             this.lstMessages.Name = "lstMessages";
-            this.lstMessages.Size = new System.Drawing.Size(511, 305);
+            this.lstMessages.Size = new System.Drawing.Size(511, 345);
             this.lstMessages.TabIndex = 4;
             this.lstMessages.UseCompatibleStateImageBehavior = false;
             this.lstMessages.View = System.Windows.Forms.View.Details;
@@ -111,7 +111,7 @@
             // 
             this.chkShowErrors.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkShowErrors.AutoSize = true;
-            this.chkShowErrors.Location = new System.Drawing.Point(3, 70);
+            this.chkShowErrors.Location = new System.Drawing.Point(3, 30);
             this.chkShowErrors.Name = "chkShowErrors";
             this.chkShowErrors.Size = new System.Drawing.Size(68, 23);
             this.chkShowErrors.TabIndex = 5;
@@ -123,7 +123,7 @@
             // 
             this.chkShowWarnings.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkShowWarnings.AutoSize = true;
-            this.chkShowWarnings.Location = new System.Drawing.Point(77, 70);
+            this.chkShowWarnings.Location = new System.Drawing.Point(77, 30);
             this.chkShowWarnings.Name = "chkShowWarnings";
             this.chkShowWarnings.Size = new System.Drawing.Size(86, 23);
             this.chkShowWarnings.TabIndex = 6;
@@ -134,7 +134,7 @@
             // lblCompileMessage
             // 
             this.lblCompileMessage.AutoSize = true;
-            this.lblCompileMessage.Location = new System.Drawing.Point(3, 54);
+            this.lblCompileMessage.Location = new System.Drawing.Point(292, 11);
             this.lblCompileMessage.Name = "lblCompileMessage";
             this.lblCompileMessage.Size = new System.Drawing.Size(123, 13);
             this.lblCompileMessage.TabIndex = 7;
@@ -142,7 +142,7 @@
             // 
             // btnRun
             // 
-            this.btnRun.Location = new System.Drawing.Point(211, 15);
+            this.btnRun.Location = new System.Drawing.Point(211, 3);
             this.btnRun.Name = "btnRun";
             this.btnRun.Size = new System.Drawing.Size(75, 23);
             this.btnRun.TabIndex = 8;

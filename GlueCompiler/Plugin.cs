@@ -43,7 +43,7 @@ namespace GlueCompiler
 
         public override void StartUp()
         {
-            InitializeCenterTabHandler = InitializeTab;
+            InitializeBottomTabHandler = InitializeTab;
             ReactToLoadedGlux = GluxLoaded;
         }
 
