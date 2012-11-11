@@ -227,7 +227,7 @@ namespace GlueCompiler.Controls
                 _lastBuildMessages = results;
 
                 // If no messages then the build was successful
-                bool success = _lastBuildMessages.All(x => x.Type != BuildMessageType.Error && x.Type == BuildMessageType.Exception);
+                bool success = _lastBuildMessages.All(x => x.Type != BuildMessageType.Error && x.Type != BuildMessageType.Exception);
                 if (success)
                 {
                     _lastBuildMessages = _lastBuildMessages.Union(new BuildMessage[]
