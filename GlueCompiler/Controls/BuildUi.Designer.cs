@@ -77,9 +77,9 @@
             this.clmProject});
             this.lstMessages.FullRowSelect = true;
             this.lstMessages.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
-            this.lstMessages.Location = new System.Drawing.Point(3, 59);
+            this.lstMessages.Location = new System.Drawing.Point(3, 32);
             this.lstMessages.Name = "lstMessages";
-            this.lstMessages.Size = new System.Drawing.Size(511, 345);
+            this.lstMessages.Size = new System.Drawing.Size(511, 372);
             this.lstMessages.TabIndex = 4;
             this.lstMessages.UseCompatibleStateImageBehavior = false;
             this.lstMessages.View = System.Windows.Forms.View.Details;
@@ -111,7 +111,7 @@
             // 
             this.chkShowErrors.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkShowErrors.AutoSize = true;
-            this.chkShowErrors.Location = new System.Drawing.Point(3, 30);
+            this.chkShowErrors.Location = new System.Drawing.Point(292, 3);
             this.chkShowErrors.Name = "chkShowErrors";
             this.chkShowErrors.Size = new System.Drawing.Size(68, 23);
             this.chkShowErrors.TabIndex = 5;
@@ -123,7 +123,7 @@
             // 
             this.chkShowWarnings.Appearance = System.Windows.Forms.Appearance.Button;
             this.chkShowWarnings.AutoSize = true;
-            this.chkShowWarnings.Location = new System.Drawing.Point(77, 30);
+            this.chkShowWarnings.Location = new System.Drawing.Point(366, 3);
             this.chkShowWarnings.Name = "chkShowWarnings";
             this.chkShowWarnings.Size = new System.Drawing.Size(86, 23);
             this.chkShowWarnings.TabIndex = 6;

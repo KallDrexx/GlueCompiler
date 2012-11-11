@@ -172,6 +172,7 @@ namespace GlueCompiler.Controls
             _lastBuildMessages = null;
             lblCompileMessage.Visible = true;
             btnCompile.Enabled = false;
+            btnRun.Enabled = false;
 
             _builder.StartCompile(solution, cmbBuildType.SelectedItem as string);
         }
@@ -246,19 +247,25 @@ namespace GlueCompiler.Controls
                 MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+            ReEnableUi();
+        }
+
+        private void ReEnableUi()
+        {
             EnableToggles();
             SetToggleText();
             DisplayMessages(_lastBuildMessages);
             lblCompileMessage.Visible = false;
             btnCompile.Enabled = true;
+            btnRun.Enabled = true;
         }
 
         private void CompileExceptionHandler(Exception ex)
         {
             string message = string.Format("A {0} exceptio occurred during compilation: {1}", ex.GetType(), ex.Message);
             MessageBox.Show(message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            lblCompileMessage.Visible = false;
-            btnCompile.Enabled = true;
+
+            ReEnableUi();
         }
     }
 }
